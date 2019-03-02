@@ -1,0 +1,8 @@
+/configs
+/node_modules
+.bash_history
+.bashrc
+.cloud-locale-test.skip
+.dbshell
+.mongorc.js
+.profile
