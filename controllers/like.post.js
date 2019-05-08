@@ -9,9 +9,9 @@ exports.like_post = (req, res) => {
             message: 'Request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'Phone is empty',
+            message: 'Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -24,6 +24,11 @@ exports.like_post = (req, res) => {
             message: 'post_id is empty',
             status: 'Failed'
         })
+    } else if(req.body.user_id=="" || !req.body.user_id){
+       return res.status(200).send({
+            message:'user id is empty',
+            status: 'Failed'
+	})
     }
 
     // var tokenverify = jwt.verify(req.body.token, config.secretkey);
@@ -40,17 +45,17 @@ exports.like_post = (req, res) => {
 
 
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
 
             postmodel.find({
                 $and: [
                     { post_id: req.body.post_id },
-                    { likes: { $in: [req.body.phone] } }
+                    { likes: { $in: [req.body.email] } }
                 ]
             }).then(data => {
                 if (Object.keys(data).length == 0) {
 
-                    postmodel.update({ post_id: req.body.post_id }, { $push: { likes: req.body.phone } })
+                    postmodel.update({ post_id: req.body.post_id }, { $push: { likes: req.body.email } })
                         .then(data => {
                             // res.json(data);
                             postmodel.find({
@@ -111,7 +116,7 @@ exports.like_post = (req, res) => {
 
                 } else {
                     postmodel.update({ post_id: req.body.post_id }, {
-                        $pull: { likes: { $in: [req.body.phone] } },
+                        $pull: { likes: { $in: [req.body.email] } },
                     }).then(data => {
                         postmodel.find({ post_id: req.body.post_id }, { _id: 0, likes: 1 }).then(data => {
                             var likesArray = data[0].likes;

@@ -9,9 +9,9 @@ exports.send_place = (req, res) => {
             message: 'request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'phone is empty',
+            message: 'Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -45,23 +45,23 @@ exports.send_place = (req, res) => {
 
 
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
 
-            var r = Math.random().toString(36).substring(7);
+            var r = Math.random().toString(36).substring(18);
 
             var post = new placemodel({
-                place_id: req.body.phone + "_" + r,
+                place_id: r,
                 title: req.body.title,
                 description: req.body.description,
                 image: req.body.image,
                 user_published: req.body.user_published,
-                published: req.body.published,
+                published: "0",
                 device_type: req.body.device_type,
-                post_by: req.body.phone
+                post_by: req.body.email
             })
 
             placemodel.find({
-                    place_id: req.body.phone + "_" + r
+                    place_id: req.body.email + "_" + r
                 })
                 .then(data => {
                     console.log(data);

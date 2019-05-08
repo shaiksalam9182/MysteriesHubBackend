@@ -10,9 +10,9 @@ exports.readFeedback = (req, res) => {
             message: 'Request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'phone is empty',
+            message: 'Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -33,7 +33,7 @@ exports.readFeedback = (req, res) => {
             })
         }
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
             feedbackmodel.find({}, {
                     _id: 0,
                     __v: 0

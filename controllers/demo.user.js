@@ -16,11 +16,6 @@ exports.demo_user = (req, res) => {
             message: 'device type is empty',
             status: 'Failed'
         })
-    } else if (req.body.android_id == "" || !req.body.android_id) {
-        return res.status(200).send({
-            message: 'android id is missing',
-            status: 'Failed'
-        })
     } else if (req.body.fcm_token == "" || !req.body.fcm_token) {
         return res.status(200).send({
             message: 'Fcm Token is missing',

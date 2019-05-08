@@ -11,20 +11,15 @@ exports.getUserData = (req, res) => {
             message: 'Request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'Phone parameter is missing',
+            message: 'Email is missing',
             status: 'Failed'
         })
 
     } else if (req.body.token == "" || !req.body.token) {
         return res.status(200).send({
             message: 'Token is missing',
-            status: 'Failed'
-        })
-    } else if (req.body.android_id == "" || !req.body.android_id) {
-        return res.status(200).send({
-            message: 'Android id is missing',
             status: 'Failed'
         })
     }
@@ -40,16 +35,16 @@ exports.getUserData = (req, res) => {
             })
         }
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
             postmodel.find({
-                post_by: req.body.phone
+                post_by: req.body.email
             }).count().then(postcounts => {
                 // console.log('postcounts', postcounts);
                 regmodel.findOne({
-                    phone: req.body.phone
+                    email: req.body.email
                 }, {
                     fullname: 1,
-                    phone: 1,
+                    email: 1,
 
                 }).then(data => {
                     var finalData = data.toObject();

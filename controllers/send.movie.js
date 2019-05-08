@@ -9,9 +9,9 @@ exports.send_movie = (req, res) => {
             message: 'request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'phone is empty',
+            message: 'Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -45,23 +45,23 @@ exports.send_movie = (req, res) => {
         }
 
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
 
-            var r = Math.random().toString(36).substring(7);
+            var r = Math.random().toString(36).substring(18);
 
             var movie = new moviemodel({
-                movie_id: req.body.phone + "_" + r,
+                movie_id: r,
                 title: req.body.title,
                 description: req.body.description,
                 image: req.body.image,
                 user_published: req.body.published,
-                published: req.body.published,
+                published: "0",
                 device_type: req.body.device_type,
-                post_by: req.body.phone
+                post_by: req.body.email
             })
 
             moviemodel.find({
-                    movie_id: req.body.phone + "_" + r
+                    movie_id: req.body.email + "_" + r
                 })
                 .then(data => {
                     console.log(data);

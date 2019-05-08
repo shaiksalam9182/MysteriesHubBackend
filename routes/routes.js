@@ -38,8 +38,18 @@ module.exports = (app) => {
     const demoPlace = require('../controllers/demo.place');
     const demoAlien = require('../controllers/demo.alien');
     const demoMovie = require('../controllers/demo.movie');
+    const suggestionVerifier = require('../controllers/suggestion.verify');
+    const updateInsert = require('../controllers/update.insert');
+    const checkUpdate = require('../controllers/update.check');
+    const getPost = require('../controllers/post.get');
+    const getPlace = require('../controllers/get.place');
+    const getAlien = require('../controllers/get.alien');
+    const getMovie = require('../controllers/get.movie');
+    const getData = require('../controllers/get.data');
 
     const bodyParser = require('body-parser');
+    const userAgent = require('express-useragent');
+    const cors = require('cors');
 
     var multer, storage, path, crypto;
 
@@ -48,11 +58,7 @@ module.exports = (app) => {
     crypto = require('crypto');
 
 
-    var form = "<!DOCTYPE HTML><html><body>" +
-        "<form method='post' action='/upload' enctype='multipart/form-data'>" +
-        "<input type='file' name='upload'/>" +
-        "<input type='submit' /></form>" +
-        "</body></html>";
+    var form = "<!DOCTYPE HTML><html><body>" + "<h1>Under construction</h1></body></html>";
 
 
 
@@ -62,14 +68,23 @@ module.exports = (app) => {
     }))
 
     app.use(bodyParser.json());
+    app.use(bodyParser.json({ limit: '50mb' }));
+    app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+    app.use(userAgent.express());
+    app.use(cors());
+    app.use(bodyParser.json({ limit: '50mb' }));
+    app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+    //app.use(express.json({ limit: '10mb' }));
+    //app.use(express.urlencoded({ limit: '10mb' }));
 
 
 
-    app.get('/', function(req, res) {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(form);
+    //app.get('/', function(req, res) {
+    //res.writeHead(200, { 'Content-Type': 'text/html' });
+    //  res.end(form);
 
-    });
+    //});
 
     app.post('/register', regController.register);
     app.post('/login', loginController.login);
@@ -109,6 +124,14 @@ module.exports = (app) => {
     app.post('/demo_place', demoPlace.demo_read_places);
     app.post('/demo_alien', demoAlien.demo_read_alien);
     app.post('/demo_movie', demoMovie.demo_read_moviese);
+    app.post('/verify_suggestion', suggestionVerifier.suggestion_verify);
+    app.post('/update', updateInsert.insert_update);
+    app.post('/update_check', checkUpdate.read_update);
+    app.get('/posts', getPost.get_post);
+    app.get('/places', getPlace.get_place);
+    app.get('/aliens', getAlien.get_alien);
+    app.get('/movies', getMovie.get_movie);
+    app.post('/get_data', getData.get_data);
 
 
 
@@ -137,7 +160,7 @@ module.exports = (app) => {
         function(req, res) {
             console.log(req.file);
             console.log(req.body);
-            res.redirect("/uploads/" + req.file.filename);
+            // res.redirect("/uploads/" + req.file.filename);
             console.log(req.file.filename);
             return res.status(200).send({
                 image_url: req.file.filename
@@ -146,11 +169,13 @@ module.exports = (app) => {
 
     app.get('/uploads/:upload', function(req, res) {
         file = req.params.upload;
-        console.log(req.params.upload);
+        console.log('in get uploads', req.params.upload);
         var img = fs.readFileSync(__dirname + "/" + file);
         res.writeHead(200, { 'Content-Type': 'image/png' });
         res.end(img, 'binary');
-
+        // res.send({
+        //     status: req.params.upload
+        // })
     });
 
 

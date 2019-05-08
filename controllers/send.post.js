@@ -1,5 +1,6 @@
 const placemodel = require('../models/post.model');
 const configs = require('../configs/configs');
+const crypto = require('crypto');
 
 const jwt = require('jsonwebtoken');
 
@@ -9,9 +10,9 @@ exports.send_post = (req, res) => {
             message: 'request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'phone is empty',
+            message: 'Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -43,16 +44,16 @@ exports.send_post = (req, res) => {
             })
         }
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
 
-            var r = Math.random().toString(36).substring(7);
+            var r = Math.random().toString(36).substring(18);
 
             var post = new placemodel({
-                post_id: req.body.phone + "_" + r,
+                post_id: r,
                 title: req.body.title,
                 description: req.body.description,
                 user_published: req.body.user_published,
-                published: req.body.published,
+                published: '0',
                 image: req.body.image,
                 // status: req.body.status,
                 // img_one: req.body.img_one,
@@ -60,11 +61,11 @@ exports.send_post = (req, res) => {
                 // img_three: req.body.img_three,
                 // img_four: req.body.img_four,
                 device_type: req.body.device_type,
-                post_by: req.body.phone
+                post_by: req.body.email
             })
 
             placemodel.find({
-                    post_id: req.body.phone + "_" + r
+                    post_id: req.body.email + "_" + r
                 })
                 .then(data => {
                     console.log(data);

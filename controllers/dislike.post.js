@@ -9,9 +9,9 @@ exports.dis_like_post = (req, res) => {
             message: 'Request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'Phone is empty',
+            message: 'Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -40,17 +40,17 @@ exports.dis_like_post = (req, res) => {
 
 
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
 
             postmodel.find({
                 $and: [
                     { post_id: req.body.post_id },
-                    { dis_likes: { $in: [req.body.phone] } }
+                    { dis_likes: { $in: [req.body.email] } }
                 ]
             }).then(data => {
                 if (Object.keys(data).length == 0) {
 
-                    postmodel.update({ post_id: req.body.post_id }, { $push: { dis_likes: req.body.phone } })
+                    postmodel.update({ post_id: req.body.post_id }, { $push: { dis_likes: req.body.email } })
                         .then(data => {
                             // res.json(data);
                             postmodel.find({
@@ -111,7 +111,7 @@ exports.dis_like_post = (req, res) => {
 
                 } else {
                     postmodel.update({ post_id: req.body.post_id }, {
-                        $pull: { dis_likes: { $in: [req.body.phone] } },
+                        $pull: { dis_likes: { $in: [req.body.email] } },
                     }).then(data => {
                         postmodel.find({ post_id: req.body.post_id }, { _id: 0, dis_likes: 1 }).then(data => {
                             var likesArray = data[0].dis_likes;

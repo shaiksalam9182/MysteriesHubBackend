@@ -18,4 +18,4 @@ var alienModel = mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model("AliensNews", alienModel);
+module.exports = mongoose.model("aliens", alienModel);

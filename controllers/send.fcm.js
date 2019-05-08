@@ -20,9 +20,9 @@ exports.sendMessage = (req, res) => {
             message: 'Request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: ' Phone is empty',
+            message: ' Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -61,17 +61,17 @@ exports.sendMessage = (req, res) => {
         }
 
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
 
-            var r = Math.random().toString(36).substring(7);
+            var r = Math.random().toString(36).substring(18);
 
             var notificatoin = new notificationModel({
-                notification_id: r + "_" + req.body.phone,
+                notification_id: r,
                 title: req.body.title,
                 description: req.body.description,
                 type: req.body.post_type,
                 type_id: req.body.post_id,
-                sendTo:req.body.sendTo
+                sendTo: req.body.sendTo
             })
 
             notificatoin.save().then(data => {

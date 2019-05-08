@@ -11,9 +11,9 @@ exports.read_places_limit = (req, res) => {
             message: 'request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: 'phone is empty',
+            message: 'Email is empty',
             status: 'Failed'
         })
     } else if (req.body.token == "" || !req.body.token) {
@@ -34,9 +34,9 @@ exports.read_places_limit = (req, res) => {
             })
         }
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
             // var skip = Number(req.body.skip);
-            placeModel.find({}, {
+            placeModel.find({ published: '1' }, {
                     _id: 0,
                     __v: 0
                 }).limit(10)

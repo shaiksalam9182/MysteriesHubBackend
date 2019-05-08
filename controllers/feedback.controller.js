@@ -10,9 +10,9 @@ exports.sendFeedback = (req, res) => {
             message: 'Request body is empty',
             status: 'Failed'
         })
-    } else if (req.body.phone == "" || !req.body.phone) {
+    } else if (req.body.email == "" || !req.body.email) {
         return res.status(200).send({
-            message: ' Phone is empty',
+            message: ' Email is empty',
             status: 'Failed'
         })
     } else if (req.body.message == "" || !req.body.message) {
@@ -25,6 +25,11 @@ exports.sendFeedback = (req, res) => {
             message: 'token is empty',
             status: 'Failed'
         })
+    } else if(req.body.type=="" || !req.body.type){
+       return res.status(200).send({
+           message:'Feedback type is empty',
+           status:'Failed'
+       })
     }
 
     // var tokenverify = jwt.verify(req.body.token, config.secretkey);
@@ -39,9 +44,9 @@ exports.sendFeedback = (req, res) => {
         }
 
 
-        if (decoded.android_id == req.body.android_id) {
+        if (decoded.user_id == req.body.user_id) {
             var feedback = new feedbackModel({
-                phone: req.body.phone,
+                email: req.body.email,
                 message: req.body.message,
                 type: req.body.type
             })
@@ -50,7 +55,7 @@ exports.sendFeedback = (req, res) => {
             feedback.save()
                 .then(data => {
                     var finaldata = data.toObject();
-                    finaldata.status = "Success";
+                    finaldata.status = "success";
                     res.json(finaldata);
                 }).catch(err => {
                     res.status(200).send({
