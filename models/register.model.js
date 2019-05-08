@@ -10,6 +10,7 @@ const regSchema = mongoose.Schema({
     fcm_token: String,
     verified: String,
     android_id: String,
+    status: String,
     user_id: String
 }, {
     timestamps: true

@@ -46,6 +46,8 @@ module.exports = (app) => {
     const getAlien = require('../controllers/get.alien');
     const getMovie = require('../controllers/get.movie');
     const getData = require('../controllers/get.data');
+    const listUsers = require('../controllers/list.users');
+    const userOperations = require('../controllers/user.operations');
 
     const bodyParser = require('body-parser');
     const userAgent = require('express-useragent');
@@ -132,6 +134,8 @@ module.exports = (app) => {
     app.get('/aliens', getAlien.get_alien);
     app.get('/movies', getMovie.get_movie);
     app.post('/get_data', getData.get_data);
+    app.post('/list_users', listUsers.list_users);
+    app.post('/user_operation', userOperations.user_opertations);
 
 
 
