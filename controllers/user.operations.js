@@ -37,11 +37,37 @@ exports.user_opertations = (req, res) => {
         })
     }
 
-    if (req.body.opertaion_value == "bu") {
-        blockUser(req, res);
-    } else if (req.body.opertaion_value == "du") {
-        deleteUser(req, res);
-    }
+
+    jwt.verify(req.body.token, config.secretkey, function(err, decoded) {
+        if (err) {
+            return res.status(200).send({
+                message: err.message,
+                status: 'Failed'
+            })
+        }
+
+        if (decoded.user_id == req.body.user_id) {
+            if (req.body.opertaion_value == "bu") {
+                blockUser(req, res);
+            } else if (req.body.opertaion_value == "du") {
+                deleteUser(req, res);
+            } else {
+                return res.status(200).send({
+                    message: 'Invalid operation',
+                    status: 'Failed'
+                })
+            }
+        } else {
+            return res.status(200).send({
+                message: 'tokens are mismatching',
+                status: 'Failed'
+            })
+        }
+
+
+    })
+
+
 
 }
 
