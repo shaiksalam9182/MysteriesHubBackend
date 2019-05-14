@@ -32,7 +32,7 @@ exports.readNotifications = (req, res) => {
 
 
         if (decoded.user_id == req.body.user_id) {
-            notificationModel.find().then(data => {
+            notificationModel.find({ $and: [{ sendTo: req.body.user_id }, { sendTo: "all" }] }).then(data => {
                 res.status(200).send({
                     status: 'success',
                     data: data

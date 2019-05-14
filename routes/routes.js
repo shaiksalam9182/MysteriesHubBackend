@@ -49,6 +49,8 @@ module.exports = (app) => {
     const listUsers = require('../controllers/list.users');
     const userOperations = require('../controllers/user.operations');
     const approval = require('../controllers/approvals');
+    const sendNotification = require('../controllers/send.notification');
+    const dashboard = require('../controllers/dashboard');
 
     const bodyParser = require('body-parser');
     const userAgent = require('express-useragent');
@@ -138,6 +140,8 @@ module.exports = (app) => {
     app.post('/list_users', listUsers.list_users);
     app.post('/user_operation', userOperations.user_opertations);
     app.post('/approval', approval.approval);
+    app.post('/send_notification', sendNotification.sendNotification);
+    app.post('/dashboard', dashboard.dashboard);
 
 
 
