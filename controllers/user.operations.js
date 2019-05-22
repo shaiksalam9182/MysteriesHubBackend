@@ -20,11 +20,6 @@ exports.user_opertations = (req, res) => {
             status: 'Failed',
             message: 'Token is empty'
         })
-    } else if (req.body.opertaion == "" || !req.body.opertaion) {
-        return res.status(200).send({
-            status: 'Failed',
-            message: 'Oprations is emtpy'
-        })
     } else if (req.body.opertaion_value == "" || !req.body.opertaion_value) {
         return res.status(200).send({
             status: 'Failed',
