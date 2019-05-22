@@ -51,6 +51,8 @@ module.exports = (app) => {
     const approval = require('../controllers/approvals');
     const sendNotification = require('../controllers/send.notification');
     const dashboard = require('../controllers/dashboard');
+    const adda = require('../controllers/create.adm');
+    const alogin = require('../controllers/alogin');
 
     const bodyParser = require('body-parser');
     const userAgent = require('express-useragent');
@@ -142,6 +144,8 @@ module.exports = (app) => {
     app.post('/approval', approval.approval);
     app.post('/send_notification', sendNotification.sendNotification);
     app.post('/dashboard', dashboard.dashboard);
+    app.post('/adda', adda.register);
+    app.post('/alogin', alogin.login);
 
 
 
