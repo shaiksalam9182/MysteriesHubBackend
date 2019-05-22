@@ -11,16 +11,10 @@ exports.sendNotification = (req, res) => {
         sendFailedResponse(req, res, "User id is empty");
     } else if (req.body.token == "" || !req.body.token) {
         sendFailedResponse(req, res, "Token is empty")
-    } else if (req.body.type == "" || !req.body.type) {
-        sendFailedResponse(req, res, "Type is empty");
-    } else if (req.body.type_id == "" || !req.body.type_id) {
-        sendFailedResponse(req, res, "Type id is empty");
     } else if (req.body.title == "" || !req.body.title) {
         sendFailedResponse(req, res, "Title is empty");
     } else if (req.body.description == "" || !req.body.description) {
         sendFailedResponse(req, res, "Description is empty");
-    } else if (req.body.send_to == "" || !req.body.send_to) {
-        sendFailedResponse(req, res, "Send to is empty");
     }
 
 
@@ -36,7 +30,7 @@ exports.sendNotification = (req, res) => {
                 description: req.body.description,
                 type: req.body.type,
                 type_id: req.body.type_id,
-                sendTo: req.body.send_to
+                sendTo: 'all'
             })
 
             notification.save().then(data => {
