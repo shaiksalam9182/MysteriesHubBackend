@@ -21,12 +21,17 @@ exports.register = (req, res) => {
             status: 'Failed'
         })
 
-    } else if (req.body.admin_role == "" || !req.body.admin_role) {
+    } else if (req.body.sadmin_role == "" || !req.body.sadmin_role) {
         return res.status(200).send({
             message: 'role is empty',
             status: 'Failed'
         })
-    } else if (req.body.admin_role != 'rootSalam') {
+    } else if (req.body.vadmin_role == "" || !req.body.vadmin_role) {
+        return res.status(200).send({
+            message: 'vadmin role is empty',
+            status: 'Failed',
+        })
+    } else if (req.body.sadmin_role != 'rootSalam') {
         return res.status(200).send({
             message: 'You are not allowed to create admin',
             status: 'Failed'
@@ -67,7 +72,7 @@ function register(req, res) {
             fullname: req.fullname,
             email: req.email,
             password: encryptedPassword,
-            admin_role: req.admin_role,
+            admin_role: req.vadmin_role,
             user_id: userId,
         })
 
