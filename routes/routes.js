@@ -53,6 +53,7 @@ module.exports = (app) => {
     const dashboard = require('../controllers/dashboard');
     const adda = require('../controllers/create.adm');
     const alogin = require('../controllers/alogin');
+    const editArticle = require('../controllers/edit.article');
 
     const bodyParser = require('body-parser');
     const userAgent = require('express-useragent');
@@ -146,6 +147,7 @@ module.exports = (app) => {
     app.post('/dashboard', dashboard.dashboard);
     app.post('/adda', adda.register);
     app.post('/alogin', alogin.login);
+    app.post('/edit_article', editArticle.editArticle);
 
 
 
